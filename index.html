@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Feel Compassは、自分の感覚や傾向を知るための無料診断を提供しています。金銭感覚診断と恋愛診断から、気になる診断を選べます。">
+  <meta name="theme-color" content="#f7f3ea">
+  <title>Feel Compass｜自分の感覚を知る診断</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f7f3ea;
+      --surface: #fffdf8;
+      --text: #201d19;
+      --muted: #6f675e;
+      --line: rgba(32, 29, 25, .12);
+      --money: #f4bf29;
+      --money-dark: #2d2415;
+      --love: #eab5b5;
+      --love-dark: #392020;
+      --shadow: 0 18px 45px rgba(51, 42, 30, .10);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 4%, rgba(244, 191, 41, .16), transparent 27rem),
+        radial-gradient(circle at 90% 30%, rgba(234, 181, 181, .18), transparent 26rem),
+        var(--background);
+      color: var(--text);
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+      line-height: 1.75;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: calc(100% - 40px);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 88px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      box-shadow: 0 5px 16px rgba(51, 42, 30, .08);
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+    }
+
+    nav { display: flex; align-items: center; gap: 20px; }
+
+    nav a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav a:hover, nav a:focus-visible { color: var(--text); }
+
+    .hero {
+      padding: 72px 0 62px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      width: 100%;
+      max-width: min(780px, calc(100vw - 40px));
+      margin: 0 auto;
+      overflow-wrap: anywhere;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
+      font-size: clamp(37px, 7vw, 72px);
+      font-weight: 500;
+      letter-spacing: .035em;
+      line-height: 1.28;
+    }
+
+    .hero-copy {
+      width: 100%;
+      max-width: min(610px, calc(100vw - 40px));
+      margin: 26px auto 0;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-size: clamp(15px, 2.3vw, 18px);
+    }
+
+    .diagnoses {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      padding-bottom: 88px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      width: 100%;
+      max-width: calc(100vw - 28px);
+      min-height: 480px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 36px;
+      border: 1px solid rgba(32, 29, 25, .07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .card::after {
+      position: absolute;
+      z-index: -1;
+      right: -65px;
+      bottom: -80px;
+      width: 250px;
+      height: 250px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px rgba(255,255,255,.13), 0 0 0 68px rgba(255,255,255,.08);
+      content: "";
+    }
+
+    .card-money { background: linear-gradient(145deg, #f9d765, var(--money)); color: var(--money-dark); }
+    .card-love { background: linear-gradient(145deg, #f5d6d0, var(--love)); color: var(--love-dark); }
+
+    .card-character {
+      display: grid;
+      height: 190px;
+      place-items: center;
+      margin: -6px 0 25px;
+    }
+
+    .card-character img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: 185px;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 18px rgba(32, 29, 25, .12));
+    }
+
+    .card-label {
+      margin: 0 0 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
+      font-size: clamp(28px, 4vw, 43px);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .card p {
+      max-width: 31em;
+      margin: 18px 0 28px;
+      overflow-wrap: anywhere;
+      font-size: 15px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 10px;
+      margin-top: auto;
+      padding: 14px 20px;
+      border-radius: 999px;
+      background: var(--text);
+      color: #fffdf8;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .card-link:hover, .card-link:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(32, 29, 25, .2);
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 60px;
+      padding: 80px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .about h2 {
+      margin: 0;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
+      font-size: clamp(27px, 4vw, 39px);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .about-text p { margin: 0 0 16px; color: var(--muted); }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .notice {
+      margin: 0 0 80px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, .7);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 28px 0 42px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links a { text-underline-offset: 4px; }
+
+    @media (max-width: 760px) {
+      .page { width: calc(100% - 28px); max-width: 620px; }
+      header { min-height: 72px; }
+      nav { display: none; }
+      .hero { padding: 54px 0 44px; }
+      h1 { font-size: clamp(28px, 8vw, 34px); letter-spacing: 0; word-break: break-all; }
+      .hero-copy { margin-top: 20px; word-break: break-all; font-size: 14px; }
+      .diagnoses { grid-template-columns: 1fr; gap: 16px; padding-bottom: 64px; }
+      .card { min-width: 0; min-height: 525px; padding: 28px; border-radius: 24px; }
+      .card-character { height: 165px; margin-bottom: 22px; }
+      .card-character img { height: 160px; }
+      .card h2 { font-size: clamp(27px, 8vw, 36px); }
+      .card p { word-break: break-all; font-size: 14px; }
+      .about { grid-template-columns: 1fr; gap: 22px; padding: 58px 0; }
+      .notice { margin-bottom: 58px; }
+      footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .card-link { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="/" aria-label="Feel Compass トップ">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Feel Compass</span>
+      </a>
+      <nav aria-label="ページ内メニュー">
+        <a href="#about">Feel Compassについて</a>
+        <a href="./privacy.html">プライバシー</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Choose your compass</p>
+        <h1 id="page-title">自分の感覚を、<br>少しだけ言葉にする。</h1>
+        <p class="hero-copy">Feel Compassは、普段は意識しにくい自分の感覚や傾向を見つめるための無料診断です。気になるテーマからお選びください。</p>
+      </section>
+
+      <section class="diagnoses" aria-label="診断一覧">
+        <article class="card card-money">
+          <div class="card-character">
+            <img src="https://money.feelcompass.com/assets/money-lantern-cutout-v1.webp" alt="あたたかなランタンを持つ、白い案内役" width="180" height="190">
+          </div>
+          <p class="card-label">Money sense</p>
+          <h2>金銭感覚診断</h2>
+          <p>普段のお金に関する感覚から、希望する暮らしに必要な収入の目安と、お金に関する5つの傾向を確認します。</p>
+          <a class="card-link" href="https://money.feelcompass.com/">金銭感覚診断をはじめる <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="card card-love">
+          <div class="card-character">
+            <img src="https://love.feelcompass.com/assets/master-base-optimized-v1.webp" alt="ハートとドクロの本を抱える、どしたんベアー" width="180" height="190">
+          </div>
+          <p class="card-label">Love sense</p>
+          <h2>恋愛診断</h2>
+          <p>恋愛での考え方や行動の傾向を振り返り、自分らしい関わり方を見つめるきっかけをつくります。</p>
+          <a class="card-link" href="https://love.feelcompass.com/">恋愛診断をはじめる <span aria-hidden="true">→</span></a>
+        </article>
+      </section>
+
+      <section class="about" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">答えを決めるためではなく、<br>自分を知るきっかけに。</h2>
+        <div class="about-text">
+          <p>診断結果は、自分の感じ方や傾向を理解するための参考情報です。結果を良い・悪いで評価したり、将来を断定したりするものではありません。</p>
+          <p>それぞれの診断は独立して利用できます。すべての診断を受ける必要はありません。</p>
+        </div>
+      </section>
+
+      <aside class="notice" aria-label="ご利用上の注意">
+        当サイトの診断は医学的・心理学的な診断ではありません。金銭感覚診断で表示する金額は目安であり、投資、保険、税金、借入れなどの助言ではありません。
+      </aside>
+    </main>
+
+    <footer>
+      <span>© 2026 Feel Compass</span>
+      <div class="footer-links">
+        <a href="#about">Feel Compassについて</a>
+        <a href="./privacy.html">プライバシーポリシー</a>
+        <a href="./advertising.html">免責事項・広告掲載方針</a>
+        <a href="./operator.html">運営者情報・お問い合わせ</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
